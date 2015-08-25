@@ -187,6 +187,12 @@ var KeyResponderSupportViewMixin = Ember.Mixin.create({
   },
 
   respondToKeyEvent: function(event) {
+    var mapping = event.shiftKey ? MODIFIED_KEY_EVENTS : KEY_EVENTS;
+    var eventName = mapping[event.keyCode];
+    if (!!eventName) {
+      event.preventDefault();
+    }
+
     Ember.run(this, function() {
       if (get(this, 'keyResponder.isActive')) {
         if (get(this, 'keyResponder.current.canBecomeKeyResponder')) {
